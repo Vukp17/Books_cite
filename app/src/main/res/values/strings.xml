@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Books_cite</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="get_started">Get started</string>
+</resources>
