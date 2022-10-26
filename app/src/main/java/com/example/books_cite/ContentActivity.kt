@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ import java.io.IOException
 
 class ContentActivity : AppCompatActivity() {
     lateinit var textView:TextView
+    lateinit var button: Button
     lateinit var recyclerView: RecyclerView
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: ActivityContentBinding
@@ -29,6 +31,7 @@ class ContentActivity : AppCompatActivity() {
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
         recyclerView=findViewById(R.id.recyclerMain)
+        button=findViewById(R.id.buttonLogout)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL ,false)
         recyclerView.setHasFixedSize(true)
         recyclerView.setBackgroundColor(Color.rgb(220,204,164))
@@ -37,7 +40,7 @@ class ContentActivity : AppCompatActivity() {
 
 
 
-        binding.buttonLogout.setOnClickListener{
+        button.setOnClickListener{
             firebaseAuth.signOut()
             val intent= Intent(this,LoginActivity::class.java);
             startActivity(intent)
