@@ -47,10 +47,34 @@
         android:id="@+id/buttonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#DCCCA4"
         android:text="Log out"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerMain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="49dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="104dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerMain"
+        app:layout_constraintVertical_bias="0.483"
+        app:srcCompat="@drawable/image2vector__2_" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="52dp"
+        android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.685"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerMain" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerMain"
+        app:srcCompat="@drawable/image2vector__1_" />
 </androidx.constraintlayout.widget.ConstraintLayout>
