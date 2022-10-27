@@ -1,59 +1,94 @@
 package com.example.books_cite
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.books_cite.databinding.ActivityContentBinding
+import com.example.books_cite.databinding.FragmentHomeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.GsonBuilder
+import okhttp3.*
+import java.io.IOException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
+    lateinit var textView: TextView
+    lateinit var button: Button
+    lateinit var recyclerView: RecyclerView
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var binding: FragmentHomeBinding
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+
+
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        binding.recyclerMain.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL ,false)
+        binding.recyclerMain.setHasFixedSize(true)
+        binding.recyclerMain.setBackgroundColor(Color.rgb(220,204,164))
+        fetch()
+
+        button.setOnClickListener{
+            firebaseAuth.signOut()
+            val intent= Intent(context,LoginActivity::class.java);
+            startActivity(intent)
     }
+
+        }
+
+
+
+    private fun fetch() {
+
+        val  request = Request.Builder()
+            .url("https://hapi-books.p.rapidapi.com/month/2022/3")
+            .get()
+            .addHeader("X-RapidAPI-Key", "29e743a9d9msh5fb3118d47deef9p1afb17jsn2c2a13901257")
+            .addHeader("X-RapidAPI-Host", "hapi-books.p.rapidapi.com")
+            .build()
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("EROR")
+
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response?.body()?.string()
+                println(body)
+
+                val gson= GsonBuilder().create()
+
+                val feed= gson.fromJson(body,library::class.java)
+                getActivity()?.runOnUiThread( Runnable {
+                  binding.recyclerMain.adapter = ContentAdapter(feed)
+                });
+            }
+
+        })
+    }
+
+
 }
