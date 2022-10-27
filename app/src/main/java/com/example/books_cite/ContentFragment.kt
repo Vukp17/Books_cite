@@ -25,6 +25,7 @@ class ContentFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    public var list = mutableListOf<String>();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,15 @@ class ContentFragment : Fragment() {
         binding.recyclerCite.setHasFixedSize(true)
         binding.recyclerCite.adapter=CiteAdapter()
         binding.recyclerCite.setBackgroundColor(Color.rgb(220, 204, 164))
+
+        binding.buttonAdd.setOnClickListener{
+            var citesText=binding.editTextCite.text.toString()
+
+            list.add(citesText)
+
+            binding.editTextCite.text.clear()
+        }
+
     }
         companion object {
         /**
