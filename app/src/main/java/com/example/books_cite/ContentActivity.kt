@@ -30,10 +30,28 @@ class ContentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityContentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(ContentFragment())
+        replaceFragment(HomeFragment())
+
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+
+            when(it.itemId){
+
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.edit -> replaceFragment(ContentFragment())
+
+
+                else ->{
 
 
 
+                }
+
+            }
+
+            true
+
+        }
 
 
     }

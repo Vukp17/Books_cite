@@ -22,9 +22,7 @@ import java.io.IOException
 class HomeFragment : Fragment() {
 
 
-    lateinit var textView: TextView
-    lateinit var button: Button
-    lateinit var recyclerView: RecyclerView
+
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: FragmentHomeBinding
 
@@ -50,7 +48,7 @@ class HomeFragment : Fragment() {
         binding.recyclerMain.setBackgroundColor(Color.rgb(220,204,164))
         fetch()
 
-        button.setOnClickListener{
+       binding.buttonLogout.setOnClickListener{
             firebaseAuth.signOut()
             val intent= Intent(context,LoginActivity::class.java);
             startActivity(intent)
