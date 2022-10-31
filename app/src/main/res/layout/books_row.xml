@@ -10,8 +10,8 @@
         android:layout_width="410dp"
         android:layout_height="132dp"
         android:layout_marginTop="44dp"
-        android:background="#E8E8E8"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="#EDE5D4"
+        android:background="@drawable/custom_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
+        android:layout_width="103dp"
+        android:layout_height="119dp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.052"

@@ -9,12 +9,16 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.books_cite.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class RegisterActivity : AppCompatActivity() {
 
  private lateinit var firebaseAuth:FirebaseAuth
  private lateinit var binding: ActivityRegisterBinding
+    private lateinit var databaseReference: DatabaseReference
+
 
 
     @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
@@ -22,10 +26,12 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         lateinit var textView: TextView
         textView = findViewById(R.id.textView5);
         firebaseAuth = FirebaseAuth.getInstance()
+        val uid= firebaseAuth.currentUser?.uid
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         textView.setOnClickListener(View.OnClickListener {
             val intent= Intent(this,LoginActivity::class.java);
             startActivity(intent);
