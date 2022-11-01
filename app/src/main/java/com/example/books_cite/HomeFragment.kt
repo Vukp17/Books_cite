@@ -48,11 +48,7 @@ class HomeFragment : Fragment() {
         binding.recyclerMain.setBackgroundColor(Color.rgb(220,204,164))
         fetch()
 
-       binding.buttonLogout.setOnClickListener{
-            firebaseAuth.signOut()
-            val intent= Intent(context,LoginActivity::class.java);
-            startActivity(intent)
-    }
+
 
         }
 

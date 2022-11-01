@@ -39,7 +39,7 @@ class ContentActivity : AppCompatActivity() {
 
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.edit -> replaceFragment(ContentFragment())
-
+                R.id.profile -> replaceFragment(ProfileFragment())
 
                 else ->{
 

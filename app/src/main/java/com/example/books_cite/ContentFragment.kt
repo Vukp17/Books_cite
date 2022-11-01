@@ -53,6 +53,9 @@ class ContentFragment : Fragment() {
         var database = FirebaseDatabase.getInstance().reference
         firebaseAuth = FirebaseAuth.getInstance()
 
+        createNotificationChanle()
+
+
          var cites = mutableListOf<String>()
         binding.buttonAdd.setOnClickListener{
             var citesText=binding.editTextCite.text.toString()
@@ -76,6 +79,14 @@ class ContentFragment : Fragment() {
             binding.editTextCite.text.clear()
         }
 
+
+
     }
+
+    private fun createNotificationChanle() {
+        TODO("Not yet implemented")
+    }
+
+
 
 }
