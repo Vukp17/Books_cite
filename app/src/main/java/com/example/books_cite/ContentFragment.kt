@@ -1,14 +1,23 @@
 package com.example.books_cite
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context.ALARM_SERVICE
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.books_cite.databinding.ActivityContentBinding
 import com.example.books_cite.databinding.FragmentContentBinding
@@ -22,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 private  lateinit var binding: FragmentContentBinding
 private lateinit var firebaseAuth: FirebaseAuth
+var cites = mutableListOf<String>()
 /**
  * A simple [Fragment] subclass.
  * Use the [ContentFragment.newInstance] factory method to
@@ -44,19 +54,23 @@ class ContentFragment : Fragment() {
         binding = FragmentContentBinding.inflate(inflater, container, false)
         return binding.root
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //recyclerView
         binding.recyclerCite.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerCite.setHasFixedSize(true)
         binding.recyclerCite.adapter=CiteAdapter()
         binding.recyclerCite.setBackgroundColor(Color.rgb(220, 204, 164))
+
+        //firebase
         var database = FirebaseDatabase.getInstance().reference
         firebaseAuth = FirebaseAuth.getInstance()
-
+        //notification
         createNotificationChanle()
+        scheduleNotification()
 
-
-         var cites = mutableListOf<String>()
+        //
         binding.buttonAdd.setOnClickListener{
             var citesText=binding.editTextCite.text.toString()
             cites.add(citesText)
@@ -83,10 +97,38 @@ class ContentFragment : Fragment() {
 
     }
 
-    private fun createNotificationChanle() {
-        TODO("Not yet implemented")
+    private fun scheduleNotification() {
+        val intent = Intent(context, Notification::class.java)
+        val tittle = "ip al smo se napili"
+
+        intent.putExtra(titleExtra, tittle)
+
+        val PendingIntent = PendingIntent.getBroadcast(
+            context,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+
+        )
+
+        val alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager?.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + 60 * 1000,
+            PendingIntent
+        )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChanle() {
+       val name = "Notif Channel"
+        val desc = "A desc of Chanel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID,name, importance)
+        channel.description=desc
+        val notificationManager = context?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
 
 
 }

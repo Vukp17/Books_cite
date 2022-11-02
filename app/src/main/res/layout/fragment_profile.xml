@@ -19,6 +19,7 @@
             android:backgroundTint="#DCCCA4"
             android:text="Log out"
             android:textAllCaps="false"
+            android:textColor="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +46,9 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            tools:ignore="ImageContrastCheck"
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="TODO" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
