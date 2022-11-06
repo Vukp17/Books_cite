@@ -63,6 +63,7 @@ class ContentFragment : Fragment() {
         binding.recyclerCite.adapter=CiteAdapter()
         binding.recyclerCite.setBackgroundColor(Color.rgb(220, 204, 164))
 
+
         //firebase
         var database = FirebaseDatabase.getInstance().reference
         firebaseAuth = FirebaseAuth.getInstance()
