@@ -31,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 private  lateinit var binding: FragmentContentBinding
 private lateinit var firebaseAuth: FirebaseAuth
-var cites = mutableListOf<String>()
 /**
  * A simple [Fragment] subclass.
  * Use the [ContentFragment.newInstance] factory method to
@@ -74,18 +73,18 @@ class ContentFragment : Fragment() {
         //
         binding.buttonAdd.setOnClickListener{
             var citesText=binding.editTextCite.text.toString()
-            cites.add(citesText)
 
             var email=firebaseAuth.currentUser?.email.toString()
             var userName = email.substringBefore("@")
-            database.child(userName).setValue(cites).addOnCompleteListener{
+            database.child(userName).setValue(Cites(citesText)).addOnCompleteListener{
                 if (it.isSuccessful) {
                     val e = it.getException()
                     Log.e("LoginActivity", "Failed Registration", e);
 
 
                 } else if (!it.isSuccessful) {
-
+                    val e = it.getException()
+                    Log.e("LoginActivity", "Failed Registration", e);
                     Toast.makeText(context, it.exception.toString(), Toast.LENGTH_SHORT).show()
                 }
 
